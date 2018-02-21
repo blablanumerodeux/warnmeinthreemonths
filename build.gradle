@@ -1,0 +1,23 @@
+group 'eu.blablanumerodeux'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    ext {
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+    }
+}
+
+apply plugin: 'java'
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web:1.5.10.RELEASE")
+}
+repositories {
+    maven {
+        url 'https://repo.spring.io/libs-milestone'
+    }
+}
