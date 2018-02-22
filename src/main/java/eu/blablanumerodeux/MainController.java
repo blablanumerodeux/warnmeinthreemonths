@@ -1,13 +1,24 @@
 package eu.blablanumerodeux;
 
-import org.springframework.boot.*;
-import org.springframework.boot.autoconfigure.*;
-import org.springframework.stereotype.*;
-import org.springframework.web.bind.annotation.*;
+import io.vertx.core.Vertx;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.PostConstruct;
 
 @Controller
-@EnableAutoConfiguration
+@SpringBootApplication
 public class MainController {
+
+    @Autowired
+    private ServerVerticle serverVerticle;
+
+    @Autowired
+    private RecipientVerticle articleRecipientVerticle;
 
     @RequestMapping("/")
     @ResponseBody
@@ -15,7 +26,16 @@ public class MainController {
         return "Hello World!";
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         SpringApplication.run(MainController.class, args);
+
     }
+
+    @PostConstruct
+    public void deployVerticle() {
+        Vertx vertx = Vertx.vertx();
+        vertx.deployVerticle(serverVerticle);
+        vertx.deployVerticle(articleRecipientVerticle);
+    }
+
 }

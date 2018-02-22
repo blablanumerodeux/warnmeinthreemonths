@@ -2,22 +2,30 @@ group 'eu.blablanumerodeux'
 version '1.0-SNAPSHOT'
 
 buildscript {
-    ext {
-    }
     repositories {
         mavenCentral()
     }
     dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.10.RELEASE")
     }
 }
 
 apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+jar {
+    baseName = 'gs-rest-service'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web:1.5.10.RELEASE")
-}
-repositories {
-    maven {
-        url 'https://repo.spring.io/libs-milestone'
-    }
+    compile("org.springframework.boot:spring-boot-starter-web")
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile 'io.vertx:vertx-web:3.5.1'
 }
